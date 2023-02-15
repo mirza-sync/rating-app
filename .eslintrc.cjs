@@ -11,5 +11,8 @@ module.exports = {
   parserOptions: {
     ecmaVersion: "latest",
   },
-  rules: { "prettier/prettier": ["error", { endOfLine: "auto" }] },
+  rules: {
+    "prettier/prettier": ["error", { endOfLine: "auto" }],
+    "no-unused-vars": "warn",
+  },
 };
