@@ -1,3 +1,5 @@
+/* Docs: https://github.com/vuejs/eslint-config-prettier */
+
 /* eslint-env node */
 require("@rushstack/eslint-patch/modern-module-resolution");
 
