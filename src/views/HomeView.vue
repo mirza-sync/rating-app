@@ -1,7 +1,11 @@
-<script setup></script>
+<script setup>
+import ReviewForm from "@/components/ReviewForm.vue";
+</script>
 
 <template>
-  <div>
-    <h1>Hello</h1>
+  <div class="home">
+    <div class="container">
+      <ReviewForm />
+    </div>
   </div>
 </template>
