@@ -18,9 +18,12 @@
 import { ref } from "vue";
 import CardContainer from "./CardContainer.vue";
 import RatingSelect from "./RatingSelect.vue";
+import { useReviewsStore } from "@/stores/reviews";
 
 const text = ref("");
 const rating = ref(0);
+
+const store = useReviewsStore();
 
 const setRating = (val) => {
   rating.value = val;
@@ -32,5 +35,6 @@ function handleSubmit() {
     text: text.value,
     rating: rating.value,
   };
+  store.addReview(newReview);
 }
 </script>

@@ -17,7 +17,7 @@ export const useReviewsStore = defineStore("reviews", () => {
       body: JSON.stringify(review),
     });
     const newReview = await response.json();
-    reviews.value = [newReview, ...reviews.value];
+    reviews.value = [...reviews.value, newReview];
   }
 
   return { reviews, addReview };
