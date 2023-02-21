@@ -20,5 +20,16 @@ export const useReviewsStore = defineStore("reviews", () => {
     reviews.value = [...reviews.value, newReview];
   }
 
-  return { reviews, addReview };
+  const averageRating = computed(() => {
+    if (reviews.value.length === 0) return 0;
+
+    const avg =
+      reviews.value.reduce((acc, curr) => {
+        return acc + curr.rating;
+      }, 0) / reviews.value.length;
+
+    return avg;
+  });
+
+  return { reviews, addReview, averageRating };
 });
