@@ -1,6 +1,6 @@
 <template>
   <CardContainer>
-    <form>
+    <form @submit.prevent="handleSubmit">
       <h2>How would you rate your service with us?</h2>
       <RatingSelect :rating="rating" @setRating="setRating" />
       <div class="input-group">
@@ -26,4 +26,11 @@ const setRating = (val) => {
   rating.value = val;
   console.log(val);
 };
+
+function handleSubmit() {
+  const newReview = {
+    text: text.value,
+    rating: rating.value,
+  };
+}
 </script>
