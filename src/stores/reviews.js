@@ -44,7 +44,7 @@ export const useReviewsStore = defineStore("reviews", () => {
         return acc + curr.rating;
       }, 0) / reviews.value.length;
 
-    return avg;
+    return avg.toFixed(1);
   });
 
   return { reviews, addReview, averageRating, reviewCount, fetchReviews };
