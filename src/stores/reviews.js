@@ -20,6 +20,18 @@ export const useReviewsStore = defineStore("reviews", () => {
     reviews.value = [...reviews.value, newReview];
   }
 
+  async function fetchReviews() {
+    try {
+      const response = await fetch(
+        "http://localhost:5000/reviews?_sort=id&_order=desc"
+      );
+      const reviewsData = await response.json();
+      reviews.value = reviewsData;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const reviewCount = computed(() => {
     return reviews.value.length;
   });
@@ -35,5 +47,5 @@ export const useReviewsStore = defineStore("reviews", () => {
     return avg;
   });
 
-  return { reviews, addReview, averageRating, reviewCount };
+  return { reviews, addReview, averageRating, reviewCount, fetchReviews };
 });
