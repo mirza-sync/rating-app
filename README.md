@@ -1,35 +1,9 @@
-# rating-app
+# Review app
 
-This template should help get you started developing with Vue 3 in Vite.
+> Practicing Vue 3 with Pinia for state management.
 
-## Recommended IDE Setup
+This is a review app where user can leave a review and rating.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+Reference: https://www.youtube.com/watch?v=w0eeWWhK1fw
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+👆 This was a pretty good tutorial. It teaches basic of vue that is useful in real world application. It demonstrated a mix between Composition API and Options API, API fetching using fake database (json-server) and the use of Pinia store. His explanation can be improved a lil bit, but overall it covers a lot of aspects of Vue.
