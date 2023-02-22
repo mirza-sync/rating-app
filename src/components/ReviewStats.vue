@@ -1,6 +1,6 @@
 <template>
   <div class="feedback-stats">
-    <h4>3 reviews</h4>
+    <h4>{{ store.reviewCount || 0 }} reviews</h4>
     <h4>
       Average rating:
       {{ store.averageRating }}
