@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="store.reviewCount === 0">
     <p>No review yet.</p>
   </div>
   <div class="reviewList">
