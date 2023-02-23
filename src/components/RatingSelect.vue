@@ -8,6 +8,7 @@
         :value="n"
         :checked="selected === n"
         v-model="selected"
+        required
       />
       <label :for="`num${n}`">{{ n }}</label>
     </li>

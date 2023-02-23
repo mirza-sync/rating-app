@@ -4,12 +4,17 @@
       <h2>How would you rate your service with us?</h2>
       <RatingSelect :rating="rating" @setRating="setRating" />
       <div class="input-group">
-        <input type="text" placeholder="Write a review" v-model="text" />
+        <input
+          type="text"
+          placeholder="Write a review"
+          v-model="text"
+          required
+        />
         <button type="submit" class="btn btn-primary" :disabled="disbleButton">
           Submit
         </button>
       </div>
-      <div class="message">Text must be at least 10 words</div>
+      <div v-if="error" class="message">{{ error }}</div>
     </form>
   </CardContainer>
 </template>
@@ -25,6 +30,7 @@ const text = ref("");
 const rating = ref(0);
 const store = useReviewsStore();
 const { editedData } = storeToRefs(store);
+const error = ref("");
 
 // if you don't use `storeToRefs`, write `store.editedData` in the watch deps
 watch(editedData.value, (newData) => {
@@ -34,23 +40,46 @@ watch(editedData.value, (newData) => {
   }
 });
 
+watch(text.value, (newText) => {
+  if (newText.length < 10) {
+    error.value = "Text must be at least 10 words";
+  } else {
+    error.value = "";
+  }
+});
+
 const setRating = (val) => {
   rating.value = val;
   console.log(val);
 };
 
 function handleSubmit() {
-  const newReview = {
-    text: text.value,
-    rating: rating.value,
-  };
-  if (!store.editedData.editable) {
-    store.addReview(newReview);
+  validate();
+
+  if (!error.value) {
+    const newReview = {
+      text: text.value,
+      rating: rating.value,
+    };
+    if (!store.editedData.editable) {
+      store.addReview(newReview);
+    } else {
+      store.updateReview({
+        ...newReview,
+        id: store.editedData.item.id,
+      });
+    }
+
+    text.value = "";
+    rating.value = 0;
+  }
+}
+
+function validate() {
+  if (text.value.length < 10) {
+    error.value = "Text must be at least 10 words";
   } else {
-    store.updateReview({
-      ...newReview,
-      id: store.editedData.item.id,
-    });
+    error.value = "";
   }
 }
 </script>
