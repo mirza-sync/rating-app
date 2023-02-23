@@ -38,21 +38,43 @@ export const useReviewsStore = defineStore("reviews", () => {
   }
 
   async function updateReview(review) {
-    const response = await fetch(`http://localhost:5000/reviews/${review.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(review),
-    });
-    const updatedReview = await response.json();
-    let reviewList = reviews.value.map((item) => {
-      item.id === review.id ? { ...item, ...updatedReview } : item;
-    });
-    reviews.value = reviewList;
-    fetchReviews();
-    editedData.value.editable = false;
-    editedData.value.item = null;
+    try {
+      const response = await fetch(
+        `http://localhost:5000/reviews/${review.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(review),
+        }
+      );
+      const updatedReview = await response.json();
+      let reviewList = reviews.value.map((item) => {
+        item.id === review.id ? { ...item, ...updatedReview } : item;
+      });
+      reviews.value = reviewList;
+      fetchReviews();
+      editedData.value.editable = false;
+      editedData.value.item = null;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function deleteReview(id) {
+    try {
+      await fetch(`http://localhost:5000/reviews/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      reviews.value = reviews.value.filter((review) => review.id !== id);
+      fetchReviews();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const reviewCount = computed(() => {
@@ -79,5 +101,6 @@ export const useReviewsStore = defineStore("reviews", () => {
     fetchReviews,
     editReview,
     updateReview,
+    deleteReview,
   };
 });

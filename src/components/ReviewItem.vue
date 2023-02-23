@@ -1,6 +1,6 @@
 <template>
   <CardContainer>
-    <button class="close">
+    <button class="close" @click="store.deleteReview(item.id)">
       <i class="fas fa-times"></i>
     </button>
     <button class="edit" @click="store.editReview(item)">
