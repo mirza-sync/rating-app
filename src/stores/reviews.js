@@ -9,15 +9,20 @@ export const useReviewsStore = defineStore("reviews", () => {
   });
 
   async function addReview(review) {
-    const response = await fetch("http://localhost:5000/reviews", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(review),
-    });
-    const newReview = await response.json();
-    reviews.value = [...reviews.value, newReview];
+    try {
+      const response = await fetch("http://localhost:5000/reviews", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(review),
+      });
+      const newReview = await response.json();
+      reviews.value = [...reviews.value, newReview];
+      fetchReviews();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async function fetchReviews() {
