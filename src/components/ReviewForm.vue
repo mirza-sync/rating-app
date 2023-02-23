@@ -7,6 +7,7 @@
         <input
           type="text"
           placeholder="Write a review"
+          ref="reviewInputField"
           v-model="text"
           required
         />
@@ -31,12 +32,14 @@ const rating = ref(0);
 const store = useReviewsStore();
 const { editedData } = storeToRefs(store);
 const error = ref("");
+const reviewInputField = ref();
 
 // if you don't use `storeToRefs`, write `store.editedData` in the watch deps
 watch(editedData.value, (newData) => {
   if (newData.editable) {
     text.value = newData.item.text;
     rating.value = newData.item.rating;
+    reviewInputField.value.focus();
   }
 });
 
