@@ -15,15 +15,24 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import CardContainer from "./CardContainer.vue";
 import RatingSelect from "./RatingSelect.vue";
 import { useReviewsStore } from "@/stores/reviews";
+import { storeToRefs } from "pinia";
 
 const text = ref("");
 const rating = ref(0);
-
 const store = useReviewsStore();
+const { editedData } = storeToRefs(store);
+
+// if you don't use `storeToRefs`, write `store.editedData` in the watch deps
+watch(editedData.value, (newData) => {
+  if (newData.editable) {
+    text.value = newData.item.text;
+    rating.value = newData.item.rating;
+  }
+});
 
 const setRating = (val) => {
   rating.value = val;
@@ -35,6 +44,13 @@ function handleSubmit() {
     text: text.value,
     rating: rating.value,
   };
-  store.addReview(newReview);
+  if (!store.editedData.editable) {
+    store.addReview(newReview);
+  } else {
+    store.updateReview({
+      ...newReview,
+      id: store.editedData.item.id,
+    });
+  }
 }
 </script>

@@ -3,7 +3,7 @@
     <button class="close">
       <i class="fas fa-times"></i>
     </button>
-    <button class="edit">
+    <button class="edit" @click="store.editReview(item)">
       <i class="fas fa-edit"></i>
     </button>
     <div class="num-display">{{ item.rating }}</div>
@@ -15,6 +15,10 @@
 
 <script setup>
 import CardContainer from "./CardContainer.vue";
+import { useReviewsStore } from "@/stores/reviews";
+
+const store = useReviewsStore();
+
 defineProps({
   item: {
     type: Object,

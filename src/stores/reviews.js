@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 
 export const useReviewsStore = defineStore("reviews", () => {
   const reviews = ref([]);
-  const editedData = reactive({
+  const editedData = ref({
     editable: false,
     item: null,
   });
@@ -32,6 +32,29 @@ export const useReviewsStore = defineStore("reviews", () => {
     }
   }
 
+  function editReview(review) {
+    editedData.value.editable = true;
+    editedData.value.item = review;
+  }
+
+  async function updateReview(review) {
+    const response = await fetch(`http://localhost:5000/reviews/${review.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(review),
+    });
+    const updatedReview = await response.json();
+    let reviewList = reviews.value.map((item) => {
+      item.id === review.id ? { ...item, ...updatedReview } : item;
+    });
+    reviews.value = reviewList;
+    fetchReviews();
+    editedData.value.editable = false;
+    editedData.value.item = null;
+  }
+
   const reviewCount = computed(() => {
     return reviews.value.length;
   });
@@ -47,5 +70,14 @@ export const useReviewsStore = defineStore("reviews", () => {
     return avg.toFixed(1);
   });
 
-  return { reviews, addReview, averageRating, reviewCount, fetchReviews };
+  return {
+    reviews,
+    editedData,
+    addReview,
+    averageRating,
+    reviewCount,
+    fetchReviews,
+    editReview,
+    updateReview,
+  };
 });
